@@ -1,16 +1,21 @@
 package com.devsuperior.dslearn.entities;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_course")
-public class Course {
+@SuppressWarnings("serial")
+public class Course implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +23,9 @@ public class Course {
 	private String name;
 	private String imgUrl;
 	private String imgGrayUri;
+	
+	@OneToMany(mappedBy = "course")
+	private List<Offer> offers = new ArrayList<>();
 	
 	public Course() {
 	}
@@ -60,6 +68,12 @@ public class Course {
 
 	public void setImgGrayUri(String imgGrayUri) {
 		this.imgGrayUri = imgGrayUri;
+	}
+	
+	
+
+	public List<Offer> getOffers() {
+		return offers;
 	}
 
 	@Override
